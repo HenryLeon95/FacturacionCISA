@@ -1,0 +1,27 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% block estilos %}
+    <link rel="stylesheet" href="{% static 'css/error.css' %}">
+    <link rel="shortcut icon" href="{% static 'css/img/texto.png' %}">
+{% endblock %}
+
+{% block title %}
+404NotFound | Techno
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+
+{% block content %}
+<body>
+<br><br><br><br><br><br><br>
+	<div id="notfound">
+		<div class="notfound">
+            <h1>Error</h1>
+			<p>Credenciales incorrectas</p>
+			<a href="{% url 'login:salir' %}">Back to homepage</a>
+		</div>
+	</div>
+<br><br><br><br><br><br><br><br>
+</body>
+{% endblock %}

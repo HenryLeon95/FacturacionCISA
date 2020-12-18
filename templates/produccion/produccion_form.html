@@ -1,0 +1,217 @@
+{%  extends 'base/base.html' %}
+
+{% block content%}
+{% if messages %}
+<ul class="messages" style="padding:16px; background-color:#990000;">
+    {% for message in messages %}
+    <div{% if message.tags %} class="{{ message.tags }}"{% endif %}  style = "font-family: Righteous; font-size: 20px;">{{ message }}</div>
+    {% endfor %}
+</ul>
+{% endif %}
+{% load staticfiles %}
+<br>
+        <div class="row spacer">
+            <div class="col-4 offset-1">
+                <a class="btn btn-danger" href="javascript:history.back()"><== Volver <==</a>
+            </div>
+        </div>
+<br>
+<div class="container" id="orden-form">
+    <form method="post" style="font-family: Righteous; color:Black; font-size:15px;" id="formm">
+        {% csrf_token %}
+        <table>
+            <tbody>
+            <tr>
+                <td>
+                    <img src="{% static 'css/img/emoji.png' %}" width="100" height="100">
+                </td>
+                <td>
+                    CERRADURAS INTERNACIONALES<br>Av. Centroamérica 21-51 Zona 1<br>Ciudad de Guatemala,Guatemala<br>
+                    <p>(+502) 2323-8723</p>
+                </td>
+                <td>
+                    <p>¿Incluye Instalación?
+                        <input disabled type="text" class="form-control" name={{form.instalacion}}--------->
+                    </p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <table>
+            <thead align="center">
+                <th>Número de pedidos relacionados de clientes CISA</th>
+            </thead>
+        </table>
+        <table>
+            <td align="center">
+                Descripción:<textarea disabled class="form-control" cols="62" rows="7"  name={{form4.descripcion}} </textarea>
+            </td>
+            <td align="center">
+                Solicitado por:<textarea disabled class="form-control" cols="62" rows="7"  name={{form4.solicitado}} </textarea>
+            </td>
+        </table>
+        <!-- <label for="">
+            {{form2.nombre_proveedor.label}}
+        </label>
+        {{form2.nombre_proveedor}} -->
+        <div class="form-group">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Proveedor:</td>
+                        <td>
+                            <input disabled type="text" class="form-control" name={{form2.nombre_proveedor}}
+                        </td>
+                    </tr>
+                    <tr style="background-color:#54b8ba">
+                        <td>Contacto:</td>
+                        <td>
+                            <input disabled type="text" class="form-control" name={{form2.contacto_proveedor}}
+                        </td>
+                    </tr>
+                    <tr >
+                        <td>Direccion:</td>
+                        <td>
+                            <input disabled type="text" class="form-control" name={{form2.direccion_proveedor}}
+                        </td>
+                    </tr>
+                    <tr style="background-color:#54b8ba">
+                        <td>Teléfono:</td>
+                        <td>
+                            <input disabled type="text" class="form-control" name={{form2.telefono_proveedor}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Correo:</td>
+                        <td>
+                            <input disabled type="text" class="form-control" name={{form2.correo_proveedor}}
+                        </td>
+                    </tr>
+                    <tr style="background-color:#54b8ba">
+                        <td>Anexo:</td>
+                        <td>
+                            <input disabled type="text" class="form-control" name={{form2.anexo}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="form-group">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>--------></td>
+                        <td><br><b>ENVIAR A:</b></td>
+                    </tr>
+                    <tr style="background-color:#54b8ba">
+                        <td>Cliente:</td>
+                        <td><input disabled type="text" class="form-control" name={{form3.nombre_cliente}} </td>
+                    </tr>
+                    <tr>
+                        <td>Contacto:</td>
+                        <td><input disabled type="text" class="form-control" name={{form3.contacto_cliente}} </td>
+                    </tr>
+                    <tr style="background-color:#54b8ba">
+                        <td>Direccion:</td>
+                        <td><input disabled type="text" class="form-control" name={{form3.direccion_cliente}} </td>
+                    </tr>
+                    <tr>
+                        <td>Teléfono:</td>
+                        <td><input disabled type="text" class="form-control" name={{form3.telefono_cliente}} </td>
+                    </tr>
+                    <tr style="background-color:#54b8ba">
+                        <td>Correo:</td>
+                        <td><input disabled type="text" class="form-control" name={{form3.correo_cliente}} </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> -
+        <div id="form_set">
+        <table border="1|0">
+            <thead>
+                <th style="background-color:#279bbd">Productos</th>
+            </thead>
+        </table>
+            <table>
+            <tbody align="center">
+                <tr>
+                    <td style="color:#007e99;">Cantidad</td>
+                    <td style="color:#007e99;">Código</td>
+                    <td style="color:#007e99;">Color</td>
+                    <td style="color:#007e99;">Función</td>
+                    <td style="color:#007e99;">Medidas en m<br>(ancho x alto)</td>
+                    <td style="color:#007e99;">Descripción del<br> Producto</td>
+                </tr>
+            {% for form5 in resultado %}
+                    <tr>
+                        <td>{{form5.cantidad}}</td>
+                        <td>{{form5.codigo}}</td>
+                        <td>{{form5.color}}</td>
+                        <td>{{form5.funcion}}</td>
+                        <td>{{form5.medida}}</td>
+                        <td>{{form5.descripcion}}</td>
+                    </tr>
+            {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row spacer">
+            <div class="col-4 offset-2">
+                {{form.total_metro.label}}<input disabled type="text" class="form-control" name={{form.total_metro}} <br>
+                {{form.tipo_vidrio.label}}<input disabled type="text" class="form-control" name={{form.tipo_vidrio}} <br>
+                {{form.observacion.label}}<textarea disabled class="form-control" cols="62" rows="7"  name={{form.observacion}} </textarea>
+            </div><br><br>
+
+            <div class="col-4 offset-2">
+                <h6 style="color:maroon;">
+                    Precio por Metro Cuadrado: Q{{precio|floatformat:2}}
+                </h6>
+                <br>
+                {% if banderaOP %}
+                <h5 align="center">Ingrese las fechas de entrega que desee <b>(Formato Year-Month-Day)</b></h5>
+                <h4 style="color:maroon;">
+                    Fecha de Entrega a Producción:
+                </h4>{{form.fecha_entrega_produccion}}
+                <br>
+                <h4 style="color:maroon;">
+                    Fecha de Entrega a Bodega:
+                </h4>{{form.fecha_entrega_bodega}}
+                <br>
+                <h4 style="color:maroon;">
+                    Fecha de Entrega al Cliente:
+                </h4>{{form.fecha_entrega_cliente}}
+
+                {%else%}
+
+                <h4 style="color:maroon;">
+                    Fecha de Entrega a Producción:
+                </h4><input disabled type="text" class="form-control" name={{form.fecha_entrega_produccion}} <br>
+                <h4 style="color:maroon;">
+                    Fecha de Entrega a Bodega:
+                </h4><input disabled type="text" class="form-control" name={{form.fecha_entrega_bodega}} <br>
+                <h4 style="color:maroon;">
+                    Fecha de Entrega al Cliente:
+                </h4><input disabled type="text" class="form-control" name={{form.fecha_entrega_cliente}} <br>
+                {% endif %}
+            </div>
+        </div><br><br>
+        {% if banderaOP %}
+        <div class="row spacer">
+            <div class="col-4 offset-5">
+                <button class="btn btn-success" type="submit">Guardar</button>
+                <a class="btn btn-danger" href="{% url 'ventas:admon' %}">Cancelar</a>
+            </div>
+        </div>
+        {% endif %}
+    </form>
+</div>
+{% endblock %}
+
+
+{% block custom_js %}
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+{% endblock %}

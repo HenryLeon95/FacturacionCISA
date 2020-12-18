@@ -1,0 +1,81 @@
+{%  extends 'base/base.html' %}
+
+{% block content%}
+{% if messages %}
+<ul class="messages" style="padding:16px; background-color:#990000;">
+    {% for message in messages %}
+    <div{% if message.tags %} class="{{ message.tags }}"{% endif %}  style = "font-family: Righteous; font-size: 20px;">{{ message }}</div>
+    {% endfor %}
+</ul>
+{% endif %}
+<div id = "main-container2">
+    {% if posts1 %}
+    <h1 align="center" style="font-family: Righteous; color:maroon;">Generar Orden de Producción</h1>
+    <table>
+        <thead>
+            <tr>
+                <th style="font-family: Righteous;"><center>ORDEN NO.</center></th>
+                {% if bandera %}
+                <th style="font-family: Righteous;"><center>ENCARGADO</center></th>
+                {% endif %}
+                <th style="font-family: Righteous;"><center>FECHA DE CREACIÓN DE O.C</center></th>
+                <th style="font-family: Righteous;"><center>ESTADO</center></th>
+                {% if banderaPrueba%}
+                <th style="font-family: Righteous;"><center>DETALLES</center></th>
+                <th style="font-family: Righteous;"><center>ORDENES ADJUNTAS</center></th>
+                {% endif %}
+                {% if bandera %}
+                <th style="font-family: Righteous;" colspan="2"><center>ACCIONES</center></th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for orden in posts1 %}
+            <tr align="center">
+                <td>{{orden.serie_orden.nombre}}-{{orden.id_orden}}</td>
+                {% if bandera %}
+                 <td>{{orden.cod_vendedor.nombre_usuario}}</td>
+                {% endif %}
+                <td>{{orden.fecha_orden}}</td>
+                <td>{{orden.tipo_info.informacion}}</td>
+                {% if banderaPrueba %}
+                <td>
+                    <a class="btn btn-primary" href="#"  style="font-family: Righteous; color:#e1cfcf">Ver</a>
+                </td>
+                <td>
+                    <a class="btn btn-primary" href="#"  style="font-family: Righteous; color:#e1cfcf;">Ver</a>
+                </td>
+                {% endif %}
+                {% if bandera %}
+                <td>
+                    <a class="btn btn-info" href="{% url 'ventas:op_create' orden.id_orden 1 %}"  style="font-family: Righteous; color:#4b1414;">Generar O.P</a>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination pagination-right">
+         <ul>
+             <li>
+                 {% if paginator1.has_prev %}
+                      <!--<a href="?page={{ paginator.firstPage }}"> << </a>-->
+                     <a class="btn btn-danger" href="?page={{ paginator1.prev_page }}" style="font-family: Righteous; color:White;">Previous</a>
+                  {% else %}
+                      <!--<a style="color:gray; cursor:not-allowed"> << </a>-->
+                      <a style="color:maroon; cursor:not-allowed">Previous</a>
+                  {% endif %}
+                  {% if paginator1.has_next %}
+                      <!--<a href="?page={{ paginator.pages }}"> >> </a>-->
+                     <a class="btn btn-danger" href="?page={{ paginator1.next_page }}" style="font-family: Righteous; color:White;">Next</a>
+                  {% else %}
+                      <!--<a style="color:gray; cursor:not-allowed"> > </a>-->
+                      <a style="color:maroon; cursor:not-allowed"> Next </a>
+                  {% endif %}
+             </li>
+             <h6 style="font-family: Righteous;">Página <{{paginator1.page}} de {{paginator1.pages}}> </h6>
+         </ul>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

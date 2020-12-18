@@ -1,0 +1,14 @@
+{%  extends 'base/base.html' %}
+
+{% block title %}
+Techno | Delete_User
+{% endblock %}
+
+{% block content%}
+<form method="post">
+    {% csrf_token %}
+    <h4 style="font-family: Righteous;">¿Desea Eliminar el Registro de <b>{{usuario.nombre_usuario}}?</b></h4>
+    <button class="btn btn-warning" type="submit">Si, Eliminar</button>
+    <a class="btn btn-danger" href="{% url 'ventas:admon' %}">Cancelar</a>
+</form>
+{% endblock %}

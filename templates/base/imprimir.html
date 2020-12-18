@@ -1,0 +1,22 @@
+{%  extends 'base/base.html' %}
+
+{% block content%}
+{% if messages %}
+<ul class="messages" style="padding:16px; background-color:#990000;">
+    {% for message in messages %}
+    <div{% if message.tags %} class="{{ message.tags }}"{% endif %}  style = "font-family: Righteous; font-size: 20px;">{{ message }}</div>
+    {% endfor %}
+</ul>
+{% endif %}
+<div id = "main-container">
+    <div class='form-group'>
+    <div class="row">
+        <div class="col-lg-1">
+            <a href="{% url 'ventas:reporte_pdf2' %}" class="btn btn-info btn-block">
+                <span class="glyphicon glyphicon-file"></span>
+            </a>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

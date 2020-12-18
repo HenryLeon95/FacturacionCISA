@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% block estilos %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/darkly.css' %}">
+    <link rel="stylesheet" type="text/css"
+  href="https://fonts.googleapis.com/css?family=Mystery+Quest">
+    <!--<link rel="shortcut icon" href="http://lineadecodigo.com/wp-content/uploads/2007/03/favicon.ico">-->
+    <link rel="shortcut icon" href="{% static 'css/img/texto.png' %}">
+    {% endblock %}
+
+    <title>{% block title%} Techno {% endblock %}</title>
+
+</head>
+<body>
+
+{% block footer %}
+<div >
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'ventas:admon' %}">USUARIOS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'ventas:ordenes' %}">TODAS LAS ORDENES</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      ORDEN DE COMPRAS
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{% url 'ventas:orden_crear' %}">Nueva O.C</a>
+                        <a class="dropdown-item" href="{% url 'ventas:mi_orden' 0 %}">Mis O.C</a>
+                        <!--Esto es solo para el Administrador y Coordinador-->
+                        <a class="dropdown-item" href="{% url 'ventas:buscar' 201503577 0 %}">Todas las O.C</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      ORDEN DE PRODUCCIÓN
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                        <a class="dropdown-item" href="{% url 'ventas:buscar' 201503577 201503579 %}">Nueva O.P</a>
+                        <a class="dropdown-item" href="{% url 'ventas:mi_orden' 1 %}">Mis O.P</a>
+                        <!--Esto es solo para el Administrador y Coordinador-->
+                        <a class="dropdown-item" href="{% url 'ventas:buscar' 201503577 201503578 %}">Todas las O.P</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      ORDEN DE ENVÍO
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink3">
+                        <a class="dropdown-item" href="{% url 'ventas:mi_orden' 3 %}">Mis O. Envío</a>
+                        <!--Esto es solo para el Administrador y Coordinador-->
+                        <a class="dropdown-item" href="{% url 'ventas:buscar' 201503577 201503580 %}">Todas las O.Envio</a>
+                    </div>
+                </li>
+                <!--Solo para el Administrador-->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      FACTURACIÓN
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink4">
+                        <a class="dropdown-item" href="{% url 'ventas:mi_orden' 5 %}">Mis O. Facturadas</a>
+                        <!--Esto es solo para el Administrador y Coordinador-->
+                        <a class="dropdown-item" href="{% url 'ventas:buscar' 201503577 201503581 %}">Todas las Facturas</a>
+                    </div>
+                </li>
+                <!--<li class="nav-item">
+                    <a class="nav-link" href="#">BUSQUEDA AVANZADA</a>
+                </li>-->
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item ">
+                    <a class="nav-link mr-sm-10" href="{% url 'login:salir' %}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+{% endblock %}
+
+{% block content %}
+<!--<nav class="navbar navbar-inverse navbar-fixed-top opaque-navbar">-->
+<br>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <div{% if message.tags %} class="{{ message.tags }}"{% endif %} style="font-family: Righteous"; font-size: 30px;>{{ message }}</div>
+    {% endfor %}
+</ul>
+{% endif %}
+<div id = "main-container4">
+    <h1 align="center" style="font-family: Righteous; color:maroon;">Usuarios Registrados</h1>
+    <table>
+        {% if object_list %}
+        <thead>
+            <tr>
+                <th style="font-family: Righteous;"><center>NOMBRE DE USUARIO</center></th>
+                <th style="font-family: Righteous;"><center>ROL</center></th>
+                <th style="font-family: Righteous;"><center>ACCIONES</center></th>
+            </tr>
+        </thead>
+        {% endif %}
+        <tbody>
+        {% if object_list %}
+        {% for usuario in object_list %}
+        <tr align="center">
+            <td>{{usuario.nombre_usuario}}</td>
+            <td>{{usuario.tipo_rol}}</td>
+            <td>
+                <a class="btn btn-primary" href="{% url 'ventas:buscar' usuario.codigo 201503577 %}"  style="font-family: Righteous;">
+                    Ver Ordenes
+                </a>
+                <a class="btn btn-primary" href="{% url 'ventas:usuario_actualizar' usuario.codigo %}"  style="font-family: Righteous;">
+                    Modificar
+                </a>
+                <a class="btn btn-danger" href="{% url 'ventas:usuario_eliminar' usuario.codigo %}"  style="font-family: Righteous; color:maroon;">
+                    Eliminar
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+
+        {% else %}
+        <br><br>
+        <h1 style="font-family: Righteous;">No hay Registros</h1>
+        {% endif %}
+        </tbody>
+    </table>
+    <br>
+    <center><h4>
+        <a class="nav-link" href="{% url 'ventas:usuario_crear' %}"  style="font-family: Righteous; color:maroon;">Crear Usuario</a>
+    </h4></center>
+</div>
+{% endblock %}
+
+{% block custom_js %}
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+{% endblock %}
+
+</body>
+</html>

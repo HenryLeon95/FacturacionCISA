@@ -1,0 +1,69 @@
+{%  extends 'base/base.html' %}
+
+{% block content%}
+{% if messages %}
+<ul class="messages" style="padding:16px; background-color:#990000;">
+    {% for message in messages %}
+    <div{% if message.tags %} class="{{ message.tags }}"{% endif %}  style = "font-family: Righteous; font-size: 20px;">{{ message }}</div>
+    {% endfor %}
+</ul>
+{% endif %}
+<div id = "main-container3">
+    <h1 align="center" style="font-family: Righteous; color:maroon;">Busqueda Avanzada</h1>
+    <table>
+        <thead>
+            <tr>{% if bandera1 %}
+                <th style="font-family: Righteous;"><center>Introduzca un nombre de usuario.</center></th>
+                {% endif %}
+                {% if bandera2 %}
+                <th style="font-family: Righteous;"><center>Introduzca el tipo de Orden</center></th>
+                {% endif %}
+                <th style="font-family: Righteous;"><center>FECHA DE CREACIÓN.</center></th>
+                <th style="font-family: Righteous;"><center>ESTADO</center></th>
+                <th style="font-family: Righteous;"><center>DETALLES</center></th>
+                <th style="font-family: Righteous;"><center>ORDENES ADJUNTAS</center></th>
+                <th style="font-family: Righteous;" colspan="2"><center>ACCIONES</center></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% if posts %}
+        {% for orden in posts %}
+        <tr align="center">
+            <td>{{orden.serie_orden.nombre}}-{{orden.id_orden}}</td>
+            {% if bandera %}
+            <td>{{orden.cod_vendedor.nombre_usuario}}</td>
+            {% endif %}
+            <td>{{orden.fecha_orden}}</td>
+            <td>{{orden.tipo_info.informacion}}</td>
+            <td>
+                <a class="btn btn-primary" href="{% url 'ventas:detalle_orden' orden.id_orden %}"  style="font-family: Righteous; color:#e1cfcf">
+                    Ver
+                </a>
+            </td>
+            <td>
+                <a class="btn btn-primary" href="#"  style="font-family: Righteous; color:#e1cfcf;">
+                    Ver
+                </a>
+            </td>
+            <td>
+                <a class="btn btn-info" href="{% url 'ventas:cambiar_orden' orden.id_orden 1 %}"  style="font-family: Righteous; color:#4b1414;">
+                    Pasar a Producción
+                </a>
+            </td>
+            <td>
+                <a class="btn btn-warning" href="#"  style="font-family: Righteous; color:maroon;">
+                    Anular
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+
+        {% else %}
+        <br><br>
+        <h1 style="font-family: Righteous;">No hay Registros</h1>
+        {% endif %}
+        </tbody>
+    </table>
+    <br>
+</div>
+{% endblock %}

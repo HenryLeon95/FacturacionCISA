@@ -1,0 +1,362 @@
+{%  extends 'base/base.html' %}
+
+{% block content%}
+{% if messages %}
+<ul class="messages" style="padding:16px; background-color:#990000;">
+    {% for message in messages %}
+    <div{% if message.tags %} class="{{ message.tags }}"{% endif %}  style = "font-family: Righteous; font-size: 20px;">{{ message }}</div>
+    {% endfor %}
+</ul>
+{% endif %}
+{% load staticfiles %}
+<!-- TERMINAR ESTO
+<div id = "main-container">
+    <h1 align="center" style="font-family: Righteous; color:maroon;">Ordenes Realizadas</h1>
+    <table>
+        {% if object_list %}
+        <thead>
+            <tr>
+                <th style="font-family: Righteous;"><center>No. Serie</center></th>
+                <th style="font-family: Righteous;"><center>Fecha de la Orden</center></th>
+                <th style="font-family: Righteous;"><center>¿Lleva Instalacion?</center></th>
+                <th style="font-family: Righteous;"><center>¿Cancelado?</center></th>
+                <th style="font-family: Righteous;"><center>Numero de pedidos relacionados de clientes CISA</center></th>
+                <th style="font-family: Righteous;"><center>Proveedor</center></th>
+            </tr>
+        </thead>
+        {% endif %}
+        <tbody>
+        {% if object_list %}
+        {% for usuario in object_list %}
+        <tr align="center">
+            <td>{{usuario.nombre_usuario}}</td>
+            <td>{{usuario.tipo_rol}}</td>
+            <td>
+                <a class="btn btn-primary" href="{% url 'ventas:usuario_actualizar' usuario.codigo %}"  style="font-family: Righteous;">
+                    Modificar
+                </a>
+                <a class="btn btn-danger" href="{% url 'ventas:usuario_eliminar' usuario.codigo %}"  style="font-family: Righteous; color:maroon;">
+                    Eliminar
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+
+        {% else %}
+        <br><br>
+        <h1 style="font-family: Righteous;">No hay Registros</h1>
+        {% endif %}
+        </tbody>
+    </table>
+    <br>
+    <center><h4>
+        <a class="nav-link" href="{% url 'ventas:usuario_crear' %}"  style="font-family: Righteous; color:maroon;">Crear Usuario</a>
+    </h4></center>
+</div>
+-->
+<!--<rigth><img src="{% static 'css/img/emoji.png' %}" width="100" height="100"></rigth>-->
+<br><br><br>
+<div class="container" id="orden-form">
+    <form method="post" style="font-family: Righteous; color:Black; font-size:15px;" id="formm">
+        {% csrf_token %}
+        <table>
+            <tbody>
+            <tr>
+                <td>
+                    <img src="{% static 'css/img/emoji.png' %}" width="100" height="100">
+                </td>
+                <td>
+                    CERRADURAS INTERNACIONALES<br>Av. Centroamérica 21-51 Zona 1<br>Ciudad de Guatemala,Guatemala<br>
+                    <p>(+502) 2323-8723</p>
+                </td>
+                <td>
+                    Elija el tipo de Serie {{form.serie_orden}}<p>¿Incluye Instalación? {{form.instalacion}}</p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <table>
+            <thead align="center">
+                <th>Número de pedidos relacionados de clientes CISA</th>
+            </thead>
+        </table>
+        <table>
+            <td align="center">
+                Descripción:
+            </td>
+            <td align="center">
+                Solicitado por:
+            </td>
+        </table>
+        {{form4.descripcion}}{{form4.solicitado}}<br>
+        <!-- <label for="">
+            {{form2.nombre_proveedor.label}}
+        </label>
+        {{form2.nombre_proveedor}} -->
+        <div class="form-group">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Proveedor:</td>
+                        <td style="body">{{form2.nombre_proveedor}}</td>
+                    </tr>
+                    <tr style="background-color:#54b8ba">
+                        <td>Contacto:</td>
+                        <td>{{form2.contacto_proveedor}}</td>
+                    </tr>
+                    <tr >
+                        <td>Dirección:</td>
+                        <td>{{form2.direccion_proveedor}}</td>
+                    </tr>
+                    <tr style="background-color:#54b8ba">
+                        <td>Teléfono:</td>
+                        <td>{{form2.telefono_proveedor}}</td>
+                    </tr>
+                    <tr>
+                        <td>Correo:</td>
+                        <td>{{form2.correo_proveedor}}</td>
+                    </tr>
+                    <tr style="background-color:#54b8ba">
+                        <td>Anexo:</td>
+                        <td>{{form2.anexo}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="form-group">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>--------></td>
+                        <td><br><b>ENVIAR A:</b></td>
+                    </tr>
+                    <tr style="background-color:#54b8ba">
+                        <td>Cliente:</td>
+                        <td>{{form3.nombre_cliente}}</td>
+                    </tr>
+                    <tr>
+                        <td>Contacto:</td>
+                        <td>{{form3.contacto_cliente}}</td>
+                    </tr>
+                    <tr style="background-color:#54b8ba">
+                        <td>Dirección:</td>
+                        <td>{{form3.direccion_cliente}}</td>
+                    </tr>
+                    <tr>
+                        <td>Teléfono:</td>
+                        <td>{{form3.telefono_cliente}}</td>
+                    </tr>
+                    <tr style="background-color:#54b8ba">
+                        <td>Correo:</td>
+                        <td>{{form3.correo_cliente}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> -
+        <div id="form_set">
+        <table border="1|0">
+            <thead>
+                <th style="background-color:#279bbd">Productos</th>
+            </thead>
+        </table>
+            <table>
+            <tbody align="center">
+                <tr>
+                    <td>Cantidad</td>
+                    <td>Código</td>
+                    <td>Color</td>
+                    <td>Función</td>
+                    <td>Medidas en m<br>(ancho x alto)</td>
+                    <td>Descripción del<br> Producto</td>
+                    <td>Precio por Unidad (Q.)</td>
+                    <td>Total (Q.)</td>
+                </tr>
+        {{ formset.management_form }}
+            {% for form5 in formset.forms %}
+                    <tr>
+                        <td>{{form5.cantidad}}</td>
+                        <td>{{form5.codigo}}</td>
+                        <td>{{form5.color}}</td>
+                        <td>{{form5.funcion}}</td>
+                        <td>{{form5.medida}}</td>
+                        <td>{{form5.descripcion}}</td>
+                        <td>{{form5.precio}}</td>
+                        <td>{{form5.total}}</td>
+                    </tr>
+            {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <input type="button" value="+" id="add_more">
+
+        <div class="col-5 offset-8" align="center">
+            <h9 style="font-family: Righteous; color:maroon;"><B>NOTA:</B> LOS CAMPOS PRECIO Y TOTAL <BR>
+                SÓLO ACEPTAN 2 DECIMALES Y SE USA <B>" , "</B><BR><BR>
+                ** Para verificar el <u>Total (Q.) actual de la orden.</u><br>Presione <u>Verificar</u> **
+            </h9><br>
+        TOTAL (Q.) <input type="text" name="verificacion" disabled>
+        </div>
+
+        <div id="empty_form" style="display:none">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>{{formset.empty_form.cantidad}}</td>
+                        <td>{{formset.empty_form.codigo}}</td>
+                        <td>{{formset.empty_form.color}}</td>
+                        <td>{{formset.empty_form.funcion}}</td>
+                        <td>{{formset.empty_form.medida}}</td>
+                        <td>{{formset.empty_form.descripcion}}</td>
+                        <td>{{formset.empty_form.precio}}</td>
+                        <td>{{formset.empty_form.total}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row spacer">
+            <div class="col-4 offset-2">
+            </div>
+        </div>
+
+        <div class="row spacer">
+            <div class="col-4 offset-2">
+                {{form.total_metro.label}} {{form.total_metro}}<br>
+                {{form.tipo_vidrio.label}} {{form.tipo_vidrio}}<br>
+                {{form.observacion.label}} {{form.observacion}}<br>
+                {{form.fecha_entrega.label}} {{form.fecha_entrega}}<br><br>
+            </div>
+        </div>
+
+        <div class="col-4 offset-2" align="center" style="color: white;">
+            <h7 style="font-family: Righteous; color:white;"> **Para verificar el <u>Precio por Metro Cuadrado</u>.<br>Presione <u>Verificar</u>**</h7><br>
+            <input type="button" value="Verificar" onclick="verificar2()">
+            <br>Precio por Mts2: (Q.)<input type="text" name="verificacion2" disabled>
+        </div><br><br>
+
+        <!--{{ formset.management_form }}
+        {% for form5 in formset %}
+        <div class="row form-row spacer">
+            <div class="col-2">
+                <label>{{form5.cantidad.label}}</label>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    {{form5.cantidad}}
+                    <div class="input-group-append">
+                        <button class="btn btn-success add-form-row">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="row spacer">
+            <div class="col-4 offset-2">
+                <button class="btn btn-success" type="submit">Guardar</button>
+                <a class="btn btn-danger" href="{% url 'ventas:admon' %}">Cancelar</a>
+            </div>
+        </div>-->
+        <div class="row spacer">
+            <div class="col-4 offset-3">
+                <button class="btn btn-success" type="submit">Guardar</button>
+                <a class="btn btn-danger" href="{% url 'ventas:admon' %}">Cancelar</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<!--
+<div class="container" id="orden-form">
+        <div class="heading">
+            <h1>Orden de Compras</h1>
+        </div>
+        <form>
+            <div class="form-group">
+                <input type="text" class="form-control" id="username" placeholder="Enter username">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+            </div>
+            <div class="clearfix"></div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox"> Remember me</label>
+            </div>
+            <button class="btn btn-success" type="submit">Guardar</button>
+        <a class="btn btn-danger" href="{% url 'ventas:admon' %}">Cancelar</a>
+        </form>
+    </div>-->
+{% endblock %}
+
+
+{% block custom_js %}
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script>
+    var saldo = 0;
+    $('#add_more').click(function() {
+        var form_idx = $('#id_form-TOTAL_FORMS').val();
+        $('#form_set').append($('#empty_form').html().replace(/__prefix__/g, form_idx));
+        $('#id_form-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+        document.getElementById('oculto').style.display = 'block';
+    });
+
+    function verificar() {
+        var saldo = 0;
+        var consulta = 0;
+        for (var i = 0; i<75; i++){
+            try{
+                consulta = 27 + 8*(i);
+                if(document.forms["formm"].elements[27 + 8*(i)].value)
+                {
+                    //alert(consulta);
+                    saldo += parseFloat(document.forms["formm"].elements[27 + 8*(i)].value);
+                }
+            }
+            catch(err){break;}
+        }
+        document.getElementsByName("verificacion")[0].value =saldo.toFixed(2);
+        document.getElementsByName("verificacion")[1].value = 12;
+    }
+
+    function verificar2() {
+        var saldo = 0;
+        var consulta = 0;
+        var ver = 0;
+        for (var i = 0; i<100; i++){
+            try{
+                consulta = 27 + 8*(i);
+                if(document.forms["formm"].elements[27 + 8*(i+1)].value != null)
+                {
+                    if (isNaN(parseFloat(document.forms["formm"].elements[27 + 8*(i)].value))) {}
+                    else {
+                        //alert(saldo);
+                        //alert (document.forms["formm"].elements[27 + 8*(i)].value);
+                        saldo = saldo + parseFloat(document.forms["formm"].elements[27 + 8*(i)].value);
+                        //alert(saldo);
+                    }
+                    //print (saldo)
+                }
+            }
+            catch(err){break;}
+        }
+        //alert("Fuera del For");
+        //alert(consulta);
+        ver = consulta-5; //Para obtener el Valor del dato del Total de metros.
+        //alert(ver);
+        //alert(document.forms["formm"].elements[ver].value);
+        var consulta2 = 0;
+        try{
+            consulta2 = saldo / document.forms["formm"].elements[ver].value;
+        }
+        catch(err){}
+        document.getElementsByName("verificacion2")[0].value =consulta2.toFixed(4);
+        document.getElementsByName("verificacion")[0].value =saldo.toFixed(4);
+    }
+
+</script>
+{% endblock %}

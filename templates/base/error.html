@@ -1,0 +1,27 @@
+{% extends 'base/base.html' %}
+{% load staticfiles %}
+{% block estilos %}
+    <link rel="stylesheet" href="{% static 'css/error.css' %}">
+    <link rel="shortcut icon" href="{% static 'css/img/texto.png' %}">
+{% endblock %}
+
+{% block title %}
+404NotFound | Techno
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+
+{% block content %}
+<body>
+<br><br><br><br><br><br><br>
+<center><img src="{% static 'css/img/err.png' %}"></center>
+	<div id="notfound">
+		<div class="notfound">
+			<p>Sorry, but the page you are looking for does not exist, has no permissions, has been removed, has changed its name or is temporarily unavailable</p>
+			<a href="{% url 'login:salir' %}">Back to homepage</a>
+		</div>
+	</div>
+<br><br><br><br><br><br><br><br>
+</body>
+{% endblock %}

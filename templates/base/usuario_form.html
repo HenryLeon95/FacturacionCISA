@@ -1,0 +1,19 @@
+{%  extends 'base/base.html' %}
+
+{% block content%}
+{% if messages %}
+<ul class="messages" style="padding:16px; background-color:#990000;">
+    {% for message in messages %}
+    <div{% if message.tags %} class="{{ message.tags }}"{% endif %}  style = "font-family: Righteous; font-size: 20px;">{{ message }}</div>
+    {% endfor %}
+</ul>
+{% endif %}
+<div id="main-container">
+    <form method="post" style="font-family: Righteous; color:Black; font-size:15px;">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button class="btn btn-warning" type="submit">Guardar</button>
+        <a class="btn btn-danger" href="{% url 'ventas:admon' %}">Cancelar</a>
+    </form>
+</div>
+{% endblock %}
